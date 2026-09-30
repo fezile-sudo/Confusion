@@ -10,7 +10,11 @@
     "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.3.8",
     "bootstrap-social": "5.1.1",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.3",
+    "express": "^5.2.1",
     "font-awesome": "^4.7.0",
+    "mongoose": "^9.10.2",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-popper": "^2.3.0",
@@ -26,7 +30,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "server": "node server/server.js",
+    "server-dev": "nodemon server/server.js"
   },
   "eslintConfig": {
     "extends": [
@@ -45,5 +51,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
   }
 }

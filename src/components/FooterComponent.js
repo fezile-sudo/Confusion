@@ -2,50 +2,136 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function Footer(props) {
-    return(
-    <div className="footer">
-        <div className="container">
-            <div className="row justify-content-center">             
-                <div className="col-4 offset-1 col-sm-2">
-                    <h5>Links</h5>
-                    <ul className="list-unstyled">
-                        <li><Link to='/home'>Home</Link></li>
-                        <li><Link to='/aboutus'>About Us</Link></li>
-                        <li><Link to='/menu'>Menu</Link></li>
-                        <li><Link to='/contactus'>Contact Us</Link></li>
-                    </ul>
-                </div>
-                <div className="col-7 col-sm-5">
-                    <h5>Our Address</h5>
-                    <address>
-		              121, Clear Water Bay Road<br />
-		              Clear Water Bay, Kowloon<br />
-		              HONG KONG<br />
-		              <i className="fa fa-phone fa-lg"></i>: +852 1234 5678<br />
-		              <i className="fa fa-fax fa-lg"></i>: +852 8765 4321<br />
-		              <i className="fa fa-envelope fa-lg"></i>: <a href="mailto:confusion@food.net">
-                         confusion@food.net</a>
-                    </address>
-                </div>
-                <div className="col-12 col-sm-4 align-self-center">
-                    <div className="text-center">
-                        <a className="btn btn-social-icon btn-google" href="http://google.com/+"><i className="fa fa-google-plus"></i></a>
-                        <a className="btn btn-social-icon btn-facebook" href="http://www.facebook.com/profile.php?id="><i className="fa fa-facebook"></i></a>
-                        <a className="btn btn-social-icon btn-linkedin" href="http://www.linkedin.com/in/"><i className="fa fa-linkedin"></i></a>
-                        <a className="btn btn-social-icon btn-twitter" href="http://twitter.com/"><i className="fa fa-twitter"></i></a>
-                        <a className="btn btn-social-icon btn-google" href="http://youtube.com/"><i className="fa fa-youtube"></i></a>
-                        <a className="btn btn-social-icon" href="mailto:"><i className="fa fa-envelope-o"></i></a>
+    return (
+        <footer className="footer">
+
+            <div className="container">
+
+                <div className="row">
+                    <div className="col-12 col-md-4 mb-4">
+
+                        <h4 className="footer-brand"> CONFUSION</h4>
+
+                        <p className="footer-tagline">Modern African Dining</p>
+
+                        <p>
+                            A contemporary celebration of African
+                            flavours, culture and hospitality.
+                        </p>
+
                     </div>
+
+                    <div className="col-6 col-md-2 mb-4">
+
+                        <h5>Explore</h5>
+
+                        <ul className="list-unstyled footer-links">
+
+                            <li>
+                                <Link to="/home">Home</Link>
+                            </li>
+
+                            <li>
+                                <Link to="/aboutus">Our Story</Link>
+                            </li>
+
+                            <li>
+                                <Link to="/menu">Menu</Link>
+                            </li>
+
+                            <li>
+                                <Link to="/contactus">Contact</Link>
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                    <div className="col-12 col-md-4 mb-4">
+
+                        <h5>Find Us</h5>
+
+                        <address>
+
+                            <strong>Confusion</strong>
+                            <br />
+
+                            18 Baakens Valley Road
+                            <br />
+
+                            Central, Gqeberha
+                            <br />
+
+                            Eastern Cape, South Africa
+                            <br /><br />
+
+                            <i className="fa fa-phone fa-lg"></i>
+                            {' '} +27 41 555 0186
+                            <br />
+
+                            <i className="fa fa-envelope fa-lg"></i>
+                            {' '}
+                            <a href="mailto:hello@confusion.co.za">
+                                hello@confusion.co.za
+                            </a>
+
+                        </address>
+
+                    </div>
+
+                    <div className="col-12 col-md-2 mb-4">
+
+                        <h5>Follow</h5>
+
+                        <div className="footer-social">
+
+                            <a href="#instagram" aria-label="Instagram">
+                                <i className="fa fa-instagram"></i>
+                            </a>
+
+                            <a href="#facebook" aria-label="Facebook">
+                                <i className="fa fa-facebook"></i>
+                            </a>
+
+                            <a href="#twitter" aria-label="Twitter">
+                                <i className="fa fa-twitter"></i>
+                            </a>
+
+                        </div>
+
+                    </div>
+
                 </div>
-            </div>
-            <div className="row justify-content-center">             
-                <div className="col-auto">
-                    <p>© Copyright 2026 Ristorante Con Fusion</p>
+
+                <div className="footer-bottom">
+
+                    <div className="row align-items-center">
+
+                        <div className="col-12 col-md-6">
+
+                            <p className="mb-0">
+                                © 2026 Confusion. All rights reserved.
+                            </p>
+
+                        </div>
+
+                        <div className="col-12 col-md-6 text-md-right">
+
+                            <p className="mb-0 footer-project-note">
+                                A portfolio project inspired by a
+                                Coursera learning project.
+                            </p>
+
+                        </div>
+
+                    </div>
+
                 </div>
+
             </div>
-        </div>
-    </div>
-    )
+
+        </footer>
+    );
 }
 
 export default Footer;

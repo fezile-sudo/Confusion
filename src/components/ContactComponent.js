@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
-import { Breadcrumb, BreadcrumbItem, Button, Row, Col, Label } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import {
+    Button,
+    Row,
+    Col,
+    Label,
+    Form,
+    FormGroup,
+    Input
+} from 'reactstrap';
 
 
 class Contact extends Component {
@@ -14,17 +21,29 @@ class Contact extends Component {
             telnum: '',
             email: '',
             agree: false,
-            contactType: 'Tel.',
-            message: ''
+            contactType: 'Email',
+            message: '',
+
+            submitting: false,
+            submitError: null,
+            submitSuccess: false
         };
+
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+
     handleChange(event) {
+
         const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
+
+        const value =
+            target.type === 'checkbox'
+                ? target.checked
+                : target.value;
+
         const name = target.name;
 
         this.setState({
@@ -32,169 +51,504 @@ class Contact extends Component {
         });
     }
 
+
     handleSubmit(event) {
-        console.log('Current State is: ' + JSON.stringify(this.state));
-        alert('Current State is: ' + JSON.stringify(this.state));
-        event.preventDefault();
-    }
+
+    event.preventDefault();
+
+    this.setState({
+        submitting: true,
+        submitError: null,
+        submitSuccess: false
+    });
+
+    fetch('http://localhost:5000/api/contact', {
+
+        method: 'POST',
+
+        headers: {
+            'Content-Type': 'application/json'
+        },
+
+        body: JSON.stringify({
+            firstname: this.state.firstname,
+            lastname: this.state.lastname,
+            telnum: this.state.telnum,
+            email: this.state.email,
+            contactType: this.state.contactType,
+            message: this.state.message,
+            agree: this.state.agree
+        })
+
+    })
+
+    .then(response => {
+
+        return response.json().then(data => {
+
+            if (!response.ok) {
+                throw new Error(
+                    data.message || 'Unable to send your message'
+                );
+            }
+
+            return data;
+
+        });
+
+    })
+
+    .then(() => {
+
+        this.setState({
+
+            firstname: '',
+            lastname: '',
+            telnum: '',
+            email: '',
+            agree: false,
+            contactType: 'Email',
+            message: '',
+
+            submitting: false,
+            submitError: null,
+            submitSuccess: true
+
+        });
+
+    })
+
+    .catch(error => {
+
+        console.error('Contact form error:', error);
+
+        this.setState({
+
+            submitting: false,
+            submitSuccess: false,
+            submitError: error.message
+
+        });
+
+    });
+
+}
+
+
 
     render() {
+
         return (
-            <div className="container">
-                <div className="row">
-                    <Breadcrumb>
-                        <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
-                        <BreadcrumbItem active>Contact Us</BreadcrumbItem>
-                    </Breadcrumb>
-                    <div className="col-12">
-                        <h3>Contact Us</h3>
-                        <hr />
-                    </div>
-                </div>
 
-                <div className="row row-content">
-                    <div className="col-12">
-                        <h3>Location Information</h3>
-                    </div>
-                    <div className="col-12 col-sm-4 offset-sm-1">
-                        <h5>Our Address</h5>
-                        <address>
-                            121, Clear Water Bay Road<br />
-                            Clear Water Bay, Kowloon<br />
-                            HONG KONG<br />
-                            <i className="fa fa-phone"></i>: +852 1234 5678<br />
-                            <i className="fa fa-fax"></i>: +852 8765 4321<br />
-                            <i className="fa fa-envelope"></i>: 
-                            <a href="mailto:confusion@food.net"> confusion@food.net</a>
-                        </address>
-                    </div>
-                </div>
+            <div className="contact-page">
+                <section className="contact-hero">
+                    <div className="container">
+                        <div className="contact-hero-content">
+                            <span className="section-label">
+                                Get in touch
+                            </span>
 
-                <div className="row row-content">
-                    <div className="col-12">
-                        <h3>Send us your Feedback</h3>
+                            <h1> Come find us.</h1>
+
+                            <p>
+                                Whether you're planning a dinner,
+                                celebrating something special or
+                                simply have a question, we'd love
+                                to hear from you.
+                            </p>
+
+                        </div>
+
                     </div>
 
-                    <div className="col-12 col-md-9">
-                        <form onSubmit={this.handleSubmit}>
+                </section>
 
-                            <Row className="form-group">
-                                <Label htmlFor="firstname" md={2}>First Name</Label>
-                                <Col md={10}>
-                                    <input
-                                        type="text"
-                                        id="firstname"
-                                        name="firstname"
-                                        placeholder="First Name"
-                                        className="form-control"
-                                        value={this.state.firstname}
-                                        onChange={this.handleChange}
-                                    />
-                                </Col>
-                            </Row>
 
-                            <Row className="form-group">
-                                <Label htmlFor="lastname" md={2}>Last Name</Label>
-                                <Col md={10}>
-                                    <input
-                                        type="text"
-                                        id="lastname"
-                                        name="lastname"
-                                        placeholder="Last Name"
-                                        className="form-control"
-                                        value={this.state.lastname}
-                                        onChange={this.handleChange}
-                                    />
-                                </Col>
-                            </Row>
+               <section className="contact-location">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-12 col-md-5">
+                                <div className="contact-info">
 
-                            <Row className="form-group">
-                                <Label htmlFor="telnum" md={2}>Contact Tel.</Label>
-                                <Col md={10}>
-                                    <input
-                                        type="text"
-                                        id="telnum"
-                                        name="telnum"
-                                        placeholder="Tel. Number"
-                                        className="form-control"
-                                        value={this.state.telnum}
-                                        onChange={this.handleChange}
-                                    />
-                                </Col>
-                            </Row>
+                                    <span className="section-label">
+                                        Visit us
+                                    </span>
 
-                            <Row className="form-group">
-                                <Label htmlFor="email" md={2}>Email</Label>
-                                <Col md={10}>
-                                    <input
-                                        type="email"
-                                        id="email"
-                                        name="email"
-                                        placeholder="Email"
-                                        className="form-control"
-                                        value={this.state.email}
-                                        onChange={this.handleChange}
-                                    />
-                                </Col>
-                            </Row>
+                                    <h2>Find Confusion</h2>
 
-                            <Row className="form-group">
-                                <Col md={{ size: 6, offset: 2 }}>
-                                    <div className="form-check">
+                                    <address>
+
+                                        <strong>Confusion</strong>
+
+                                        <br />
+
+                                        18 Baakens Valley Road
+
+                                        <br />
+
+                                        Walmer
+
+                                        <br />
+
+                                        Gqeberha
+
+                                        <br />
+
+                                        Eastern Cape
+
+                                        <br />
+
+                                        South Africa
+
+                                    </address>
+
+
+                                    <div className="contact-details">
+
+                                        <p>
+                                            <i className="fa fa-phone"></i>
+                                            {' '}
+                                            +27 41 555 0142
+                                        </p>
+
+                                        <p>
+                                            <i className="fa fa-envelope"></i>
+                                            {' '}
+                                            hello@confusion.co.za
+                                        </p>
+
+                                    </div>
+
+
+                                    <div className="contact-hours">
+
+                                        <h5>Opening hours</h5>
+
+                                        <p>
+                                            Tuesday – Thursday
+                                            <br />
+                                            12:00 – 21:30
+                                        </p>
+
+                                        <p>
+                                            Friday – Saturday
+                                            <br />
+                                            12:00 – 22:30
+                                        </p>
+
+                                        <p>
+                                            Sunday
+                                            <br />
+                                            12:00 – 18:00
+                                        </p>
+
+                                        <p>
+                                            Monday — Closed
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div className="col-12 col-md-7">
+
+                                <div className="contact-location-card">
+
+                                    <div className="location-card-content">
+
+                                        <span className="location-mark">
+                                            C
+                                        </span>
+
+                                        <h3>
+                                            Gqeberha,
+                                            <br />
+                                            Eastern Cape
+                                        </h3>
+
+                                        <p>
+                                            A fictional home for
+                                            Confusion, inspired by
+                                            the coastal character
+                                            and diverse food culture
+                                            of the Eastern Cape.
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <section className="contact-form-section">
+
+                    <div className="container">
+
+                        <div className="row">
+
+                            <div className="col-12 col-md-4">
+
+                                <div className="contact-form-intro">
+
+                                    <span className="section-label">
+                                        Drop us a line
+                                    </span>
+
+                                    <h2>
+                                        We'd love to
+                                        <br />
+                                        hear from you.
+                                    </h2>
+
+                                    <p>
+                                        Have a question about the
+                                        menu, want to plan a private
+                                        event or simply want to say
+                                        hello?
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div className="col-12 col-md-8">
+
+                                <Form className="contact-form" onSubmit={this.handleSubmit}>
+                                        {/* Name */}
+                                    <Row>
+
+                                        <Col md={6}>
+
+                                            <FormGroup>
+
+                                                <Label htmlFor="firstname">First Name</Label>
+
+                                                <Input
+                                                    type="text"
+                                                    id="firstname"
+                                                    name="firstname"
+                                                    placeholder="Your first name"
+                                                    value={this.state.firstname}
+                                                    onChange={this.handleChange}
+                                                    required
+                                                />
+
+                                            </FormGroup>
+
+                                        </Col>
+
+
+                                        <Col md={6}>
+
+                                            <FormGroup>
+
+                                                <Label htmlFor="lastname">
+                                                    Last Name
+                                                </Label>
+
+                                                <Input
+                                                    type="text"
+                                                    id="lastname"
+                                                    name="lastname"
+                                                    placeholder="Your last name"
+                                                    value={this.state.lastname}
+                                                    onChange={this.handleChange}
+                                                    required
+                                                />
+
+                                            </FormGroup>
+
+                                        </Col>
+
+                                    </Row>
+
+
+                                    {/* Contact */}
+
+                                    <Row>
+
+                                        <Col md={6}>
+
+                                            <FormGroup>
+
+                                                <Label htmlFor="email">
+                                                    Email
+                                                </Label>
+
+                                                <Input
+                                                    type="email"
+                                                    id="email"
+                                                    name="email"
+                                                    placeholder="you@example.com"
+                                                    value={this.state.email}
+                                                    onChange={this.handleChange}
+                                                    required
+                                                />
+
+                                            </FormGroup>
+
+                                        </Col>
+
+
+                                        <Col md={6}>
+
+                                            <FormGroup>
+
+                                                <Label htmlFor="telnum">Phone</Label>
+
+                                                <Input
+                                                    type="tel"
+                                                    id="telnum"
+                                                    name="telnum"
+                                                    placeholder="+27 ..."
+                                                    value={this.state.telnum}
+                                                    onChange={this.handleChange}
+                                                />
+
+                                            </FormGroup>
+
+                                        </Col>
+
+                                    </Row>
+
+                                    <FormGroup>
+
+                                        <Label htmlFor="contactType">
+                                            Preferred contact method
+                                        </Label>
+
+                                        <Input
+                                            type="select"
+                                            id="contactType"
+                                            name="contactType"
+                                            value={this.state.contactType}
+                                            onChange={this.handleChange}
+                                        >
+
+                                            <option>Email</option>
+
+                                            <option>Phone</option>
+
+                                        </Input>
+
+                                    </FormGroup>
+
+                                    <FormGroup>
+
+                                        <Label htmlFor="message">Message</Label>
+
+                                        <Input
+                                            type="textarea"
+                                            id="message"
+                                            name="message"
+                                            rows="6"
+                                            placeholder="Tell us what's on your mind..."
+                                            value={this.state.message}
+                                            onChange={this.handleChange}
+                                            required
+                                        />
+
+                                    </FormGroup>
+
+                                    <FormGroup check>
+
                                         <Label check>
-                                            <input
+
+                                            <Input
                                                 type="checkbox"
                                                 name="agree"
-                                                className="form-check-input"
                                                 checked={this.state.agree}
                                                 onChange={this.handleChange}
-                                            />{' '}
-                                            <strong>May we contact you?</strong>
+                                            />
+
+                                            <span className="contact-checkbox-text">
+                                                It's okay for Confusion
+                                                to contact me about
+                                                this message.
+                                            </span>
+
                                         </Label>
-                                    </div>
-                                </Col>
 
-                                <Col md={{ size: 3, offset: 1 }}>
-                                    <select
-                                        name="contactType"
-                                        className="form-control"
-                                        value={this.state.contactType}
-                                        onChange={this.handleChange}
+                                    </FormGroup>
+
+
+                                    <Button
+                                        type="submit"
+                                        color="primary"
+                                        disabled={this.state.submitting}
                                     >
-                                        <option>Tel.</option>
-                                        <option>Email</option>
-                                    </select>
-                                </Col>
-                            </Row>
-
-                            <Row className="form-group">
-                                <Label htmlFor="message" md={2}>Your Feedback</Label>
-                                <Col md={10}>
-                                    <textarea
-                                        id="message"
-                                        name="message"
-                                        rows="12"
-                                        className="form-control"
-                                        value={this.state.message}
-                                        onChange={this.handleChange}
-                                    />
-                                </Col>
-                            </Row>
-
-                            <Row className="form-group">
-                                <Col md={{ size: 10, offset: 2 }}>
-                                    <Button type="submit" color="primary">
-                                        Send Feedback
+                                        {this.state.submitting
+                                            ? 'Sending...'
+                                            : 'Send Message'}
                                     </Button>
-                                </Col>
-                            </Row>
 
-                        </form>
+                                {this.state.submitSuccess && (
+                                    <p className="text-success mt-3">
+                                        Thank you for contacting Confusion.
+                                        We will be in touch soon.
+                                    </p>
+                                )}
+
+                                {this.state.submitError && (
+                                    <p className="text-danger mt-3">
+                                        {this.state.submitError}
+                                    </p>
+                                )}
+
+
+                                </Form>
+
+                            </div>
+
+                        </div>
+
                     </div>
-                </div>
+
+                </section>
+
+                <section className="contact-cta">
+
+                    <div className="container">
+
+                        <div className="contact-cta-content">
+
+                            <span className="section-label">
+                                Hungry already?
+                            </span>
+
+                            <h2>Explore the menu.</h2>
+
+                            <p>
+                                Discover the flavours coming out
+                                of the Confusion kitchen.
+                            </p>
+
+                            <a href="/menu" className="btn btn-primary">
+                                View Menu
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
             </div>
+
         );
     }
 }
+
 
 export default Contact;

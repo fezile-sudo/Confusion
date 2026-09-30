@@ -7,8 +7,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Comments = void 0;
 
-var _comments = require("../shared/comments");
-
 var ActionTypes = _interopRequireWildcard(require("./ActionTypes"));
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -22,17 +20,32 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var Comments = function Comments() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _comments.COMMENTS;
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+    isLoading: false,
+    errMess: null,
+    comments: []
+  };
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
-    case ActionTypes.ADD_COMMENT:
-      var newComment = _objectSpread({}, action.payload, {
-        id: state.length,
-        date: new Date().toISOString()
+    case ActionTypes.COMMENTS_LOADING:
+      return _objectSpread({}, state, {
+        isLoading: true,
+        errMess: null
       });
 
-      return state.concat(newComment);
+    case ActionTypes.ADD_COMMENTS:
+      return _objectSpread({}, state, {
+        isLoading: false,
+        errMess: null,
+        comments: action.payload
+      });
+
+    case ActionTypes.COMMENTS_FAILED:
+      return _objectSpread({}, state, {
+        isLoading: false,
+        errMess: action.payload
+      });
 
     default:
       return state;
