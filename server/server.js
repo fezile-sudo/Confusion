@@ -4,6 +4,10 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path');
+const dns = require('dns');
+
+dns.setServers(['1.1.1.1']);
+
 
 const dishRouter = require('./routes/dishRouter');
 const commentRouter = require('./routes/commentRouter');

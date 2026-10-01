@@ -10,6 +10,10 @@ var dotenv = require('dotenv');
 
 var path = require('path');
 
+var dns = require('dns');
+
+dns.setServers(['1.1.1.1']);
+
 var dishRouter = require('./routes/dishRouter');
 
 var commentRouter = require('./routes/commentRouter');

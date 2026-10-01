@@ -4,10 +4,13 @@ var mongoose = require('mongoose');
 
 var dotenv = require('dotenv');
 
+var dns = require('dns');
+
 var Dish = require('./models/Dish');
 
 var Team = require('./models/Team');
 
+dns.setServers(['1.1.1.1']);
 dotenv.config();
 var dishes = [{
   name: 'Chakalaka Croquettes',

@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const dns = require('dns');
 const Dish = require('./models/Dish');
 const Team = require('./models/Team');
 
-
+dns.setServers(['1.1.1.1']);
 
 dotenv.config();
 
