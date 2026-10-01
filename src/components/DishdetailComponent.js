@@ -14,6 +14,8 @@ import {
     Label,
     Input
 } from 'reactstrap';
+import API_BASE_URL from '../config';
+
 
 class CommentForm extends Component {
 
@@ -311,7 +313,7 @@ class DishDetail extends Component {
 
         Promise.all([
 
-            fetch(`http://localhost:5000/api/dishes/${dishId}`).then(response => {
+            fetch(`${API_BASE_URL}/api/dishes/${dishId}`).then(response => {
 
                 if (!response.ok) {
                     throw new Error('Dish not found');
@@ -322,7 +324,7 @@ class DishDetail extends Component {
             }),
 
 
-            fetch(`http://localhost:5000/api/comments/dish/${dishId}`).then(response => {
+           fetch(`${API_BASE_URL}/api/comments/dish/${dishId}`).then(response => {
 
                 if (!response.ok) {
                     throw new Error('Unable to load comments');
@@ -359,7 +361,8 @@ class DishDetail extends Component {
 
     addComment = (comment) => {
 
-        fetch('http://localhost:5000/api/comments', {
+        fetch(`${API_BASE_URL}/api/comments`, {
+
 
             method: 'POST',
 

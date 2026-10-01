@@ -8,6 +8,8 @@ import {
     Media
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import API_BASE_URL from '../config';
+
 
 function RenderLeader({ leader }) {
 
@@ -73,7 +75,8 @@ class About extends Component {
 
     componentDidMount() {
 
-        fetch('http://localhost:5000/api/team')
+        fetch(`${API_BASE_URL}/api/team`)
+
 
             .then(response => {
 

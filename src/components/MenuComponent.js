@@ -7,6 +7,9 @@ import {
     CardText
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import API_BASE_URL from '../config';
+
+
 
 function RenderMenuItem({ dish }) {
 
@@ -118,7 +121,8 @@ class Menu extends Component {
 
     componentDidMount() {
 
-        fetch('http://localhost:5000/api/dishes')
+        fetch(`${API_BASE_URL}/api/dishes`)
+
 
             .then(response => {
 

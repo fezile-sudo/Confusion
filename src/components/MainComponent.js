@@ -25,6 +25,7 @@ import {
     addLeaders,
     leadersFailed
 } from '../redux/ActionCreators';
+import API_BASE_URL from '../config';
 
 
 /* =========================================
@@ -74,7 +75,8 @@ class Main extends Component {
 
         dishesLoading();
 
-        fetch('http://localhost:5000/api/dishes')
+        fetch(`${API_BASE_URL}/api/dishes`)
+
 
             .then(response => {
 
@@ -103,7 +105,9 @@ class Main extends Component {
 
         leadersLoading();
 
-        fetch('http://localhost:5000/api/team')
+        fetch(`${API_BASE_URL}/api/team`)
+
+
 
             .then(response => {
 

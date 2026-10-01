@@ -8,6 +8,7 @@ import {
     FormGroup,
     Input
 } from 'reactstrap';
+import API_BASE_URL from '../config';
 
 
 class Contact extends Component {
@@ -62,7 +63,8 @@ class Contact extends Component {
         submitSuccess: false
     });
 
-    fetch('http://localhost:5000/api/contact', {
+    fetch(`${API_BASE_URL}/api/contact`, {
+
 
         method: 'POST',
 
